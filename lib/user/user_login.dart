@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:eventhub/connect.dart';
+import 'package:eventhub/home.dart';
 import 'package:eventhub/user/user_home.dart';
 import 'package:eventhub/user/user_register.dart';
 import 'package:flutter/material.dart';
@@ -81,7 +82,15 @@ class _user_loginState extends State<user_login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+        appBar: AppBar(
+          leading:IconButton(onPressed: () {
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>home())); },
+            icon: Icon(Icons.arrow_back_ios_new),
+            
+          ) ,
+        ),
+
+        body: SafeArea(
       child: SingleChildScrollView(
       child: Form(
       key: _formkey,

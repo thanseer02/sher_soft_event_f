@@ -2,6 +2,8 @@ import 'package:eventhub/admin/admin_home.dart';
 import 'package:eventhub/user/user_register.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../home.dart';
 class admin_login extends StatefulWidget {
   const admin_login({super.key});
 
@@ -28,6 +30,13 @@ class _admin_loginState extends State<admin_login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          leading:IconButton(onPressed: () {
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>home())); },
+            icon: Icon(Icons.arrow_back_ios_new),
+
+          ) ,
+        ),
         body: SafeArea(
             child: SingleChildScrollView(
                 child: Form(

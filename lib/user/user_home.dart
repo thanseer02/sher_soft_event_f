@@ -73,7 +73,7 @@ class _user_homeState extends State<user_home> {
       ),
       body: SafeArea(
           child: Container(
-            height: double.infinity,
+            // height: MediaQuery.of(context).size.height,
             child:  RefreshIndicator(
               onRefresh: refreshData ,
               child: FutureBuilder(
@@ -82,16 +82,18 @@ class _user_homeState extends State<user_home> {
                     if (snapshot.hasError) {
                       print(snapshot.error);
                     }
-                    if (!snapshot.hasData ||snapshot.data.length==0) {
+                    if (!snapshot.hasData || snapshot.data.length==0) {
                     return const Center(
-                    child: CircularProgressIndicator(),
+                    child: Text('No data',style: TextStyle(fontSize: 20,color: Colors.white),),
                     );
                     }
                     return
-                      flag==0?Center(child: CircularProgressIndicator(
-                      backgroundColor: Colors.teal,
-                      color: Colors.white,
-                      )): ListView.builder(
+                      // flag==0?Center(child: CircularProgressIndicator(
+                      // backgroundColor: Colors.teal,
+                      // color: Colors.white,
+                      // )):
+                      ListView.builder(
+                          // reverse: true,
                     itemCount: snapshot.data.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(
