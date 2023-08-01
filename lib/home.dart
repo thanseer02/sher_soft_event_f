@@ -1,10 +1,11 @@
 import 'package:eventhub/admin/admin_login.dart';
+import 'package:eventhub/connect.dart';
 import 'package:eventhub/user/user_login.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 class home extends StatelessWidget {
-  const home({super.key});
-
+   home({super.key});
+  var log_id=getLoginId();
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -31,6 +32,9 @@ class home extends StatelessWidget {
                       ),
                       onPressed: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>user_login()));
+                        // print('data saved ${log_id}');
+                        // print( log_id);
+
                       }, child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [

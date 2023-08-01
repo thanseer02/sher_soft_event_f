@@ -1,6 +1,6 @@
 import 'dart:convert';
-
 import 'package:eventhub/connect.dart';
+import 'package:eventhub/home.dart';
 import 'package:eventhub/user/add_events.dart';
 import 'package:eventhub/user/user_login.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +14,8 @@ class user_home extends StatefulWidget {
 }
 
 class _user_homeState extends State<user_home> {
+  bool isLoggedIn =true;
+  var log;
   var log_id=getLoginId();
   var flag;
   Future<String?>? log_idFuture;
@@ -43,10 +45,10 @@ class _user_homeState extends State<user_home> {
     };
     print(log_id);
     var response=await post(Uri.parse("${con.url}add_event/view_event.php"),body: data);
-    print(response.body);
+    // print(response.body);
     print(response.statusCode);
     if (response.statusCode == 200 && jsonDecode(response.body)[0]['result']=='success') {
-      print(response.body);
+      // print(response.body);
       flag=1;
       return jsonDecode(response.body);
     }
@@ -59,6 +61,14 @@ class _user_homeState extends State<user_home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.white,
+        onPressed: () {
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>add_events()));
+
+        },
+        child: Icon(Icons.add,color: Colors.black,),),
+
       appBar: AppBar(
         leading: IconButton(onPressed: (){
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>user_login()));
@@ -67,8 +77,12 @@ class _user_homeState extends State<user_home> {
         title: Text('Event Hub',style:  GoogleFonts.gruppo(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white),),
         actions: [
           IconButton(onPressed: (){
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>add_events()));
-          }, icon: Icon(Icons.add,color: Colors.white,size: 35,))
+            setState(() {
+              isLoggedIn=!isLoggedIn;
+            });
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>home()));
+
+          }, icon: Icon(Icons.logout,color: Colors.white,size: 35,))
         ],
       ),
       body: SafeArea(

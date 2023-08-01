@@ -8,3 +8,4 @@ Future<String?> getLoginId() async {
   String? login_id = prefs.getString('loginId');
   return login_id;
 }
+bool isLoggedIn = false;

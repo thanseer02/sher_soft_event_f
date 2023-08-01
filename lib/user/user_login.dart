@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:eventhub/connect.dart';
 import 'package:eventhub/home.dart';
 import 'package:eventhub/user/user_home.dart';
@@ -16,6 +15,8 @@ class user_login extends StatefulWidget {
 }
 
 class _user_loginState extends State<user_login> {
+  bool isLoggedIn = false;
+
   var log_id;
   final TextEditingController mobile_noctrl=TextEditingController();
   final TextEditingController passwordctrl=TextEditingController();
@@ -32,6 +33,11 @@ class _user_loginState extends State<user_login> {
     if (jsonDecode(response.body)['result']=='success') {
       id(jsonDecode(response.body)['log_id']);
       print(jsonDecode(response.body)['log_id']);
+      isLoggedIn = true;
+      // print('object');
+      // print(isLoggedIn);
+      // Navigator.pushReplacementNamed(context, '/home');
+
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>user_home()), (Route<dynamic> route) => false);
       // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>user_home()));
       // Navigator.push(context, MaterialPageRoute(builder: (context)=>user_home()));
@@ -58,7 +64,7 @@ class _user_loginState extends State<user_login> {
     log_id=jsonDecode(response.body)['log_id'];
     if (log_id!=null) {
       savedata(log_id);
-      print('data saved');
+      print('data saved ${log_id}');
     }  
     @override
     void initState(){
@@ -67,11 +73,21 @@ class _user_loginState extends State<user_login> {
     }
   }
 
-  void savedata(String loginId) async {
+  // void handleLogin(BuildContext context) async {
+  //   // Perform login process (e.g., verify credentials)
+  //   // If login is successful, set isLoggedIn to true and store it in SharedPreferences
+  //   final prefs = await SharedPreferences.getInstance();
+  //   prefs.setBool('isLoggedIn', true);
+  //
+  //   // Navigate to the home page after login
+  //   Navigator.pushReplacementNamed(context, '/home');
+  // }
+
+  void savedata(String loginId,) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('loginId', loginId);
     print(loginId);
-    print('data yeahhh');
+    print('data');
 
   }
   Future<String?> getLoginId() async {
@@ -89,7 +105,6 @@ class _user_loginState extends State<user_login> {
             
           ) ,
         ),
-
         body: SafeArea(
       child: SingleChildScrollView(
       child: Form(
@@ -184,6 +199,10 @@ class _user_loginState extends State<user_login> {
                       backgroundColor: Color(0xff068DA9)),
                   onPressed: (){
                     print('loggin');
+                    setState(() {
+                      isLoggedIn !=isLoggedIn;
+                    });
+                    print(isLoggedIn);
                     login();
                   }, child: Text('Login',style: TextStyle(fontSize: 20),)),
             ),
